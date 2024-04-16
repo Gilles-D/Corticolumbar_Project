@@ -14,6 +14,58 @@ Outputs = sorting results (spikeinterface)
 
 """
 
+#%%Parameters
+
+#####################################################################
+###################### TO CHANGE ####################################
+#####################################################################
+#Folder containing the folders of the session
+
+concatenated_signals = [
+"D:/Seafile/Ma bibliothèque/Data/ePhy/concatenated_signals/0040_11_04",
+# "D:/Seafile/Ma bibliothèque/Data/ePhy/concatenated_signals/0040_26_03",
+# "D:/Seafile/Ma bibliothèque/Data/ePhy/concatenated_signals/0040_27_03"
+    ]
+
+
+spikesorting_results_folder='D:/Seafile/Ma bibliothèque/Data/ePhy/spikesorting_results'
+concatenated_files_folder = 'D:/Seafile/Ma bibliothèque/Data/ePhy/concatenated_signals'
+
+param_sorter = {
+    'kilosort3':{
+                  # 'detect_threshold': 6,
+                  # 'projection_threshold': [10, 2],
+                  # 'preclust_threshold': 8,
+                  # 'car': True,
+                  # 'minFR': 0.02,
+                  # 'minfr_goodchannels': 0.1,
+                  # 'nblocks': 0,
+                  # 'sig': 20, 
+                  # 'freq_min': 150, 
+                  # 'sigmaMask': 30, 
+                  # 'lam': 10.0, 
+                  # 'nPCs': 6, 
+                  # 'ntbuff': 64, 
+                  # 'nfilt_factor': 4, 
+                  # 'do_correction': True, 
+                  # 'NT': None, 
+                  # 'AUCsplit': 0.7, 
+                  # 'wave_length': 61, 
+                  # 'keep_good_only': False, 
+                  # 'skip_kilosort_preprocessing': False, 
+                  # 'scaleproc': None, 
+                  # 'save_rez_to_mat': False, 
+                  # 'delete_tmp_files': ('matlab_files',), 
+                  # 'delete_recording_dat': False, 
+                  # 'n_jobs': 8, 
+                  # 'chunk_duration': '1s', 
+                  # 'progress_bar': True, 
+                  # 'mp_context': None, 
+                  # 'max_threads_per_process': 1
+                 },
+               }
+
+
 #%% modules
 import spikeinterface as si
 import spikeinterface.extractors as se 
@@ -51,7 +103,9 @@ import pandas as pd
 
 #%% Functions
 
-def spike_sorting(record,spikesorting_results_folder,saving_name,use_docker=True,nb_of_agreement=2,plot_sorter=True,plot_comp=True,save=True,export_to_phy=True):
+def spike_sorting(record,param_sorter,spikesorting_results_folder,saving_name,
+                  use_docker=True,nb_of_agreement=2,plot_sorter=True,
+                  plot_comp=True,save=True,export_to_phy=True,sorting_summary=True):
     """
     Perform spike sorting using multiple sorters and compare the results.
 
@@ -68,136 +122,6 @@ def spike_sorting(record,spikesorting_results_folder,saving_name,use_docker=True
     Returns:
         None
     """
-    
-    param_sorter = {
-        'kilosort3':{
-            # 'detect_threshold': 6,
-                      # 'projection_threshold': [10, 2],
-                      # 'preclust_threshold': 8,
-                      # 'car': True,
-                      # 'minFR': 0.02,
-                      # 'minfr_goodchannels': 0.1,
-                      # 'nblocks': 0,
-                      # 'sig': 20, 
-                      # 'freq_min': 150, 
-                      # 'sigmaMask': 30, 
-                      # 'lam': 10.0, 
-                      # 'nPCs': 6, 
-                      # 'ntbuff': 64, 
-                      # 'nfilt_factor': 4, 
-                      # 'do_correction': True, 
-                      # 'NT': None, 
-                      # 'AUCsplit': 0.7, 
-                      # 'wave_length': 61, 
-                      # 'keep_good_only': False, 
-                      # 'skip_kilosort_preprocessing': False, 
-                      # 'scaleproc': None, 
-                      # 'save_rez_to_mat': False, 
-                      # 'delete_tmp_files': ('matlab_files',), 
-                      # 'delete_recording_dat': False, 
-                      # 'n_jobs': 8, 
-                      # 'chunk_duration': '1s', 
-                      # 'progress_bar': True, 
-                      # 'mp_context': None, 
-                      # 'max_threads_per_process': 1
-                     },
-        'kilosort2':{
-            # 'detect_threshold': 6, 
-            # 'projection_threshold': [10, 2], 
-            # 'preclust_threshold': 8, 
-            # 'momentum': [20.0, 400.0], 
-            # 'car': True, 
-            # 'minFR': 0.02, 
-            # 'minfr_goodchannels': 0.1, 
-            # 'freq_min': 150, 
-            # 'sigmaMask': 30,
-            # 'lam': 10.0,
-            # 'nPCs': 6, 
-            # 'ntbuff': 64, 
-            # 'nfilt_factor': 4,
-            # 'NT': None, 
-            # 'AUCsplit': 0.7, 
-            # 'wave_length': 61,
-            # 'keep_good_only': False,
-            # 'skip_kilosort_preprocessing': False, 
-            # 'scaleproc': None, 
-            # 'save_rez_to_mat': False,
-            # 'delete_tmp_files': ('matlab_files',),
-            # 'delete_recording_dat': False, 
-            # 'n_jobs': 8, 
-            # 'chunk_duration': '1s',
-            # 'progress_bar': True, 
-            # 'mp_context': None, 
-            # 'max_threads_per_process': 1
-            
-            
-            },    
-        'kilosort2_5':{
-            # 'detect_threshold': 6, 
-            # 'projection_threshold': [10, 2], 
-            # 'preclust_threshold': 8, 
-            # 'momentum': [20.0, 400.0], 
-            # 'car': True, 
-            # 'minFR': 0.02, 
-            # 'minfr_goodchannels': 0.1, 
-            # 'freq_min': 150, 
-            # 'sigmaMask': 30,
-            # 'lam': 10.0,
-            # 'nPCs': 6, 
-            # 'ntbuff': 64, 
-            # 'nfilt_factor': 4,
-            # 'NT': None, 
-            # 'AUCsplit': 0.7, 
-            # 'wave_length': 61,
-            # 'keep_good_only': False,
-            # 'skip_kilosort_preprocessing': False, 
-            # 'scaleproc': None, 
-            # 'save_rez_to_mat': False,
-            # 'delete_tmp_files': ('matlab_files',),
-            # 'delete_recording_dat': False, 
-            # 'n_jobs': 8, 
-            # 'chunk_duration': '1s',
-            # 'progress_bar': True, 
-            # 'mp_context': None, 
-            # 'max_threads_per_process': 1
-            
-            
-            }, 
-                
-        'mountainsort4': {
-                                        'detect_sign': -1,  # Use -1, 0, or 1, depending on the sign of the spikes in the recording
-                                        'adjacency_radius': -1,  # Use -1 to include all channels in every neighborhood
-                                        'freq_min': 300,  # Use None for no bandpass filtering
-                                        'freq_max': 6000,
-                                        'filter': True,
-                                        'whiten': True,  # Whether to do channel whitening as part of preprocessing
-                                        'num_workers': 1,
-                                        'clip_size': 50,
-                                        'detect_threshold': 3,
-                                        'detect_interval': 10,  # Minimum number of timepoints between events detected on the same channel
-                                        'tempdir': None
-                                    },
-                    'tridesclous': {
-                                        'freq_min': 300.,   #'High-pass filter cutoff frequency'
-                                        'freq_max': 6000.,#'Low-pass filter cutoff frequency'
-                                        'detect_sign': -1,     #'Use -1 (negative) or 1 (positive) depending on the sign of the spikes in the recording',
-                                        'detect_threshold': 5, #'Threshold for spike detection',
-                                        'n_jobs' : 8,           #'Number of jobs (when saving ti binary) - default -1 (all cores)',
-                                        'common_ref_removal': True,     #'remove common reference with median',
-                                    },
-                    'spykingcircus': {
-                                        'detect_sign': -1,  #'Use -1 (negative),1 (positive) or 0 (both) depending on the sign of the spikes in the recording'
-                                        'adjacency_radius': 100,  # Radius in um to build channel neighborhood
-                                        'detect_threshold': 6,  # Threshold for detection
-                                        'template_width_ms': 3,  # Template width in ms. Recommended values: 3 for in vivo - 5 for in vitro
-                                        'filter': True, # Enable or disable filter
-                                        'merge_spikes': True, #Enable or disable automatic mergind
-                                        'auto_merge': 0.75, #Automatic merging threshold
-                                        'num_workers': None, #Number of workers (if None, half of the cpu number is used)
-                                        'whitening_max_elts': 1000,  # Max number of events per electrode for whitening
-                                        'clustering_max_elts': 10000,  # Max number of events per electrode for clustering
-                                    }
-                   }
     
     print("Spike sorting starting")
 
@@ -223,7 +147,7 @@ def spike_sorting(record,spikesorting_results_folder,saving_name,use_docker=True
             try:
                 print('Runing sorter')
                 sorter_result = ss.run_sorter(sorter_name,recording=record,output_folder=output_folder,docker_image=True,verbose=True,**sorter_param)
-                sorter_result.save(output_folder)
+                # sorter_result.save(output_folder)
                 sorter_list.append(sorter_result)
                 sorter_name_list.append(sorter_name)
             except Exception as e:
@@ -231,11 +155,8 @@ def spike_sorting(record,spikesorting_results_folder,saving_name,use_docker=True
                 sorter_result = 0
               
     
-    
-
         #save the sorter params
         try:
-            
             with open(f'{output_folder}\param_dict.pkl', 'wb') as f:
                 pickle.dump(sorter_param, f)
             if os.path.isdir(f'{output_folder}\we'):
@@ -243,6 +164,14 @@ def spike_sorting(record,spikesorting_results_folder,saving_name,use_docker=True
                 we = si.WaveformExtractor.load_from_folder(f'{output_folder}\we', sorting=sorter_result)
             else:
                 we = si.extract_waveforms(record, sorter_result, folder=f'{output_folder}\we')
+        
+            print('Computing correlograms...')
+            spost.compute_correlograms(we,load_if_exists=True)
+            print('Computing spike_amplitudes...')
+            spost.compute_spike_amplitudes(we,load_if_exists=True)
+            print('Computing template_similarity...')
+            spost.compute_unit_locations(we,load_if_exists=True)
+            spost.compute_template_similarity(we,load_if_exists=True) 
         
             if plot_sorter:
                 folder_path = fr"{spikesorting_results_folder}\{saving_name}\{sorter_name}\we"
@@ -328,7 +257,14 @@ def spike_sorting(record,spikesorting_results_folder,saving_name,use_docker=True
                 plot_maker(sorting_agreement, we, save, comp_multi_name, spikesorting_results_folder,saving_name)
                 print('Plot multiple comparaison summary finished\n')
             
-    
+    if sorting_summary:
+        """
+        Do not use yet
+        As 16/04/24 : AttributeError: module 'referencing' has no attribute 'jsonschema'
+        """
+        
+        print('Sorting_summary using sortingview')       
+        sw.plot_sorting_summary(waveform_extractor=we, backend="sortingview")
 
     return sorter_result,we
 
@@ -409,32 +345,6 @@ def plot_maker(sorter, we, save, sorter_name, save_path,saving_name):
 # desc = ss.get_sorter_params_description(sorter_name_or_class='kilosort2')
 # print("Descriptions:\n", desc)
 
-#%%Parameters
-
-#####################################################################
-###################### TO CHANGE ####################################
-#####################################################################
-#Folder containing the folders of the session
-
-concatenated_signals = [
-"D:/ePhy/SI_Data/concatenated_signals/0034_16_02",
-"D:/ePhy/SI_Data/concatenated_signals/0033_16_02",
-"D:/ePhy/SI_Data/concatenated_signals/0033_22_01",
-"D:/ePhy/SI_Data/concatenated_signals/0032_01_10",
-"D:/ePhy/SI_Data/concatenated_signals/0031_01_10",
-"D:/ePhy/SI_Data/concatenated_signals/0035_26_01",
-"D:/ePhy/SI_Data/concatenated_signals/0031_15_02",
-"D:/ePhy/SI_Data/concatenated_signals/0034_24_01",
-"D:/ePhy/SI_Data/concatenated_signals/0030_01_11",
-"D:/ePhy/SI_Data/concatenated_signals/0030_01_09"
-    ]
-
-
-# saving_name="0026_02_08"
-spikesorting_results_folder='D:\ePhy\SI_Data\spikesorting_results'
-concatenated_files_folder = 'D:/ePhy/SI_Data/concatenated_signals'
-
-
 
 #%% Main function
 for session in concatenated_signals:
@@ -442,4 +352,12 @@ for session in concatenated_signals:
     print('================================')
     print(session_name)
     recording = si.load_extractor(session)
-    sorting = spike_sorting(recording,spikesorting_results_folder,session_name,plot_sorter=True, plot_comp=True, export_to_phy = True)
+    sorting = spike_sorting(recording,
+                            param_sorter,
+                            spikesorting_results_folder,
+                            session_name,
+                            plot_sorter=True,
+                            plot_comp=True,
+                            export_to_phy = False,
+                            sorting_summary = False)
+    
