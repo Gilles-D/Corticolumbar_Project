@@ -61,4 +61,40 @@
 
 <u>Output :</u>
 
-- Concatenated signal of the session, readable by spikeinterface
+- **Concatenated signal** of the session, readable by spikeinterface
+
+
+
+## <u>Step2- Spikesorting</u>
+
+<u>Usage :</u>
+
+- Perform spikinterface spikesorting
+
+<u>Parameters to edit :</u>
+
+- concatenated_signals : concatenated signals in binary format (one or multiple sessions)
+
+- spikesorting_results_folder, concatenated_files_folder
+
+<u>Output :</u>
+
+- **Sorting results** (spikeinterface)
+
+
+
+## <u>Step3- Curation</u>
+
+<u>Usage :</u>
+
+- Perform spikinterface spikesorting
+
+<u>Parameters to edit :</u>
+
+- concatenated_signals : concatenated signals in binary format (one or multiple sessions)
+
+- spikesorting_results_folder, concatenated_files_folder
+
+<u>Output :</u>
+
+- **Sorting results** (spikeinterface)
