@@ -11,6 +11,47 @@ Inputs = intan files (.rhd format)
 Outputs = binary format (spikeinterface readable)
 
 """
+
+#%%Parameters
+
+#####################################################################
+###################### TO CHANGE ####################################
+#####################################################################
+
+
+#Folder containing the folders of the session
+animal_id = "0040"
+session_name = "0040_27_03"
+saving_name=session_name
+
+rhd_folder = rf'D:\Seafile\Ma bibliothèque\Data\ePhy\Intan_Data\{animal_id}\{session_name}'
+
+
+#####################################################################
+#Verify the following parameters and paths
+
+probe_path=r'D:/Seafile/Ma bibliothèque/Data/ePhy/probe/A1x16-Poly2-5mm-50s-177.json'   #INTAN Optrode
+# probe_path = 'D:/ePhy/SI_Data/Buzsaki16.json'              #INTAN Buzsaki16
+
+
+# Saving Folder path
+saving_dir=r"D:\Seafile\Ma bibliothèque\Data\ePhy/concatenated_signals"
+
+# Filtering frequencies
+freq_min = 300      #High pass filter
+freq_max = 6000     #Low pass filter
+
+MOCAP_200Hz_notch = True        #Notch filtering for the MOCAP artefacts
+remove_stim_artefact = True     #Stim artefacts removing for opto-stimulations
+
+
+# OPTIONAL : Sites to exclude
+excluded_sites = []
+
+
+
+
+
 #%% Imports
 import spikeinterface as si
 import spikeinterface.extractors as se 
@@ -45,6 +86,9 @@ from elephant.statistics import time_histogram
 from neo.core import SpikeTrain
 from quantities import s, ms
 import pandas as pd
+
+
+
 
 #%% Functions
 
@@ -169,10 +213,14 @@ def concatenate_preprocessing(recordings,saving_dir,saving_name,probe_path,exclu
         
                 
         if remove_stim_artefact == True:
-            stim_idx = recording_info['stim_ttl_on']
-            multirecording = spre.remove_artifacts(multirecording,stim_idx, ms_before=1.2, ms_after=1.2,mode='linear')
-            w = sw.plot_timeseries(multirecording,time_range=[stim_idx[0]/20000,(stim_idx[0]/20000)+10], segment_index=0)
-
+            try:
+                print("Removing stim artefacts")
+                stim_idx = recording_info['stim_ttl_on']
+                multirecording = spre.remove_artifacts(multirecording,stim_idx, ms_before=1.2, ms_after=1.2,mode='linear')
+                w = sw.plot_timeseries(multirecording,time_range=[stim_idx[0]/20000,(stim_idx[0]/20000)+10], segment_index=0)
+            except:
+                print("Error in removing stim artefacts")
+                print(rf"Number of stim_ttl : {len(stim_idx)}")
             
         
         """------------------Pre Processing------------------"""
@@ -284,35 +332,7 @@ def plot_maker(sorter, we, save, sorter_name, save_path,saving_name):
             plt.close()
 
 
-#%%Parameters
 
-#####################################################################
-###################### TO CHANGE ####################################
-#####################################################################
-
-
-#Folder containing the folders of the session
-animal_id = "0035"
-session_name = "0035_26_01"
-saving_name=session_name
-
-rhd_folder = rf'D:\ePhy\Intan_Data\{animal_id}\{session_name}'
-
-
-#####################################################################
-#Verify the following parameters and paths
-
-probe_path=r'D:/ePhy/SI_Data/A1x16-Poly2-5mm-50s-177.json'   #INTAN Optrode
-# probe_path = 'D:/ePhy/SI_Data/Buzsaki16.json'              #INTAN Buzsaki16
-
-
-# Saving Folder path
-saving_dir=r"D:/ePhy/SI_Data/concatenated_signals"
-spikesorting_results_folder='D:\ePhy\SI_Data\spikesorting_results'
-
-
-# Sites to exclude
-excluded_sites = []
 
 
 #%%Main script
@@ -321,6 +341,6 @@ recordings = list_recording_files(rhd_folder)
     
 recording = concatenate_preprocessing(recordings,saving_dir,saving_name,
                                       probe_path,excluded_sites,Plotting=True,
-                                      freq_min=300, freq_max=6000,
-                                      MOCAP_200Hz_notch=True,
-                                      remove_stim_artefact=True)
+                                      freq_min=freq_min, freq_max=freq_max,
+                                      MOCAP_200Hz_notch=MOCAP_200Hz_notch,
+                                      remove_stim_artefact=remove_stim_artefact)
