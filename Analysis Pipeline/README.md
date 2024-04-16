@@ -87,14 +87,14 @@
 
 <u>Usage :</u>
 
-- Perform spikinterface spikesorting
+- 
 
 <u>Parameters to edit :</u>
 
-- concatenated_signals : concatenated signals in binary format (one or multiple sessions)
+- 
 
-- spikesorting_results_folder, concatenated_files_folder
+- 
 
 <u>Output :</u>
 
-- **Sorting results** (spikeinterface)
+- 
