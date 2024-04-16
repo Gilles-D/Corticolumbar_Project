@@ -16,6 +16,44 @@ Returns: a curated sorter result (spikeinterface) and computed metrics, and wave
 
 """
 
+#%% Parameters
+session_name = '0040_11_04'
+sorter_name='kilosort3'
+# sorter_name='mountainsort4'
+
+
+concatenated_signals_path = r'D:\Seafile\Ma bibliothèque\Data\ePhy\concatenated_signals'
+spikesorting_results_folder = r'D:\Seafile\Ma bibliothèque\Data\ePhy\spikesorting_results'
+sorter_folder = rf'{spikesorting_results_folder}/{session_name}/{sorter_name}'
+signal_folder = rf'{concatenated_signals_path}/{session_name}'
+
+
+
+
+"""
+https://spikeinterface.readthedocs.io/en/latest/modules/qualitymetrics.html
+
+Criterium to exclude units :
+    
+    (- refractory period < 0.5% (1ms))
+    - minimum frequency < 0.1 Hz
+    - presence ratio > 90 (eliminate artefacts?)
+    - ISI violation ratio > 5
+    - L ratio > 10 ?
+    
+"""
+
+
+
+max_isi = 5
+min_frequency = 0.1
+min_presence = 0.9
+max_l_ratio = 10
+
+similarity_threshold = 0.9
+
+
+
 #%% Imports and functions
 import spikeinterface as si
 import spikeinterface.sorters as ss
@@ -165,41 +203,6 @@ def fractionner_liste(liste, taille_sous_liste):
     return sous_listes
 
 
-#%% Parameters
-session_name = '0023_09_08'
-sorter_name='kilosort3'
-# sorter_name='mountainsort4'
-
-
-concatenated_signals_path = r'D:\ePhy\SI_Data\concatenated_signals'
-spikesorting_results_folder = r'D:\ePhy\SI_Data\spikesorting_results'
-sorter_folder = rf'{spikesorting_results_folder}/{session_name}/{sorter_name}'
-signal_folder = rf'{concatenated_signals_path}/{session_name}'
-
-
-
-
-"""
-https://spikeinterface.readthedocs.io/en/latest/modules/qualitymetrics.html
-
-Criterium to exclude units :
-    
-    (- refractory period < 0.5% (1ms))
-    - minimum frequency < 0.1 Hz
-    - presence ratio > 90 (eliminate artefacts?)
-    - ISI violation ratio > 5
-    - L ratio > 10 ?
-    
-"""
-
-
-
-max_isi = 5
-min_frequency = 0.1
-min_presence = 0.9
-max_l_ratio = 10
-
-similarity_threshold = 0.9
 
 
 #%% One sorter auto-curation
@@ -233,9 +236,10 @@ Filtering with criteria
 crit_ISI = quality_metrics['isi_violations_ratio'] < max_isi
 crit_frequency = quality_metrics['firing_rate'] > min_frequency
 crit_presence = quality_metrics['presence_ratio'] > min_presence
-crit_l_ratio = quality_metrics['l_ratio'] < max_l_ratio
+# crit_l_ratio = quality_metrics['l_ratio'] < max_l_ratio
 
-selected_quality_metrics = quality_metrics[crit_ISI & crit_frequency & crit_presence & crit_l_ratio]
+# selected_quality_metrics = quality_metrics[crit_ISI & crit_frequency & crit_presence & crit_l_ratio]
+selected_quality_metrics = quality_metrics[crit_ISI & crit_frequency & crit_presence]
 selected_spike_id_list = selected_quality_metrics.index
 
 spikes_not_passing_quality_metrics = list(set(spike_id_list) - set(selected_spike_id_list))
@@ -285,7 +289,7 @@ for couple in similarity_couples_indexed:
     
     
 
-units_to_merge = [[0,8], [35, 43], [1, 10], [41, 52,34], [8, 24],[39, 49]]
+units_to_merge = []
 
 units_to_remove = []
 
@@ -334,6 +338,7 @@ for i in fractionner_liste(unit_list,5):
     sw.plot_unit_templates(clean_we, unit_ids=i)
     
     savepath = rf"{sorter_folder}\curated\processing_data\waveforms\plots\multiple_unit_{count}.svg"
+    savepath = rf"{sorter_folder}\curated\processing_data\waveforms\plots\multiple_unit_{count}.png"
     Check_Save_Dir(os.path.dirname((savepath)))
     plt.savefig(savepath)
 
