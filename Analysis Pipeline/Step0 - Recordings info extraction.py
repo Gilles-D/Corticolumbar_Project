@@ -8,8 +8,20 @@ Created on Tue Aug  8 22:20:13 2023
 Extract TTL indexes from intan files for a given animal
 Saves it as a pickle file (recording_info) in the signal folder
 
+Parameters to edit :
+    - pipeline_path : folder containing intanutils folder
+    - session_folder_path : animal folder containing intan recordings session
+
+
 """
 import os
+
+"""
+############ Parameters to edit ############
+"""
+
+pipeline_path = r"F:\Corticolumbar_Project\Analysis Pipeline"
+session_folder_path = r'D:\Seafile\Ma bibliothèque\Data\ePhy\Intan_Data\0040'
 
 #%%Functions
 
@@ -29,7 +41,7 @@ Returns:
     import numpy as np
     import pickle
     #load intan class
-    sys.path.append(r"C:\Users\MOCAP\Documents\GitHub\main\In vivo Multi")
+    sys.path.append(pipeline_path)
 
     from intanutil.read_header import read_header
     from intanutil.get_bytes_per_data_block import get_bytes_per_data_block
@@ -366,8 +378,6 @@ def list_recording_files(path):
     return fichiers
 
 #%% Main script
-session_folder_path = r'D:/ePhy/Intan_Data/0035'
-
 recording_folders = list_recording_folders(session_folder_path)
 
 for folder in recording_folders:
