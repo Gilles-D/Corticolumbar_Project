@@ -15,7 +15,7 @@ from tkinter import filedialog
 
 # Création d'une instance de Tkinter
 root = tk.Tk()
-# root.withdraw()  # Cacher la fenêtre principale de Tkinter
+root.withdraw()  # Cacher la fenêtre principale de Tkinter
 
 # Ouvrir la fenêtre de dialogue pour choisir un fichier
 pickle_path = filedialog.askopenfilename(
