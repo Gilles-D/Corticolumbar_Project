@@ -22,46 +22,53 @@ Outputs = sorting results (spikeinterface)
 #Folder containing the folders of the session
 
 concatenated_signals = [
-"D:/Seafile/Ma bibliothèque/Data/ePhy/concatenated_signals/0040_11_04",
-# "D:/Seafile/Ma bibliothèque/Data/ePhy/concatenated_signals/0040_26_03",
-# "D:/Seafile/Ma bibliothèque/Data/ePhy/concatenated_signals/0040_27_03"
+"D:/Seafile/Data/ePhy/concatenated_signals/0030_01_09",
+"D:/Seafile/Data/ePhy/concatenated_signals/0030_01_11",
+"D:/Seafile/Data/ePhy/concatenated_signals/0031_01_10",
+"D:/Seafile/Data/ePhy/concatenated_signals/0031_15_02",
+"D:/Seafile/Data/ePhy/concatenated_signals/0032_01_10",
+"D:/Seafile/Data/ePhy/concatenated_signals/0033_16_02",
+"D:/Seafile/Data/ePhy/concatenated_signals/0033_22_01",
+"D:/Seafile/Data/ePhy/concatenated_signals/0034_16_02",
+"D:/Seafile/Data/ePhy/concatenated_signals/0034_24_01",
+"D:/Seafile/Data/ePhy/concatenated_signals/0035_26_01"
     ]
 
 
-spikesorting_results_folder='D:/Seafile/Ma bibliothèque/Data/ePhy/spikesorting_results'
-concatenated_files_folder = 'D:/Seafile/Ma bibliothèque/Data/ePhy/concatenated_signals'
+spikesorting_results_folder='D:/Seafile/Data/ePhy/spikesorting_results'
+concatenated_files_folder = 'D:/Seafile/Data/ePhy/concatenated_signals'
 
 param_sorter = {
     'kilosort3':{
-                  # 'detect_threshold': 6,
-                  # 'projection_threshold': [10, 2],
-                  # 'preclust_threshold': 8,
-                  # 'car': True,
-                  # 'minFR': 0.02,
-                  # 'minfr_goodchannels': 0.1,
-                  # 'nblocks': 0,
-                  # 'sig': 20, 
-                  # 'freq_min': 150, 
-                  # 'sigmaMask': 30, 
-                  # 'lam': 10.0, 
-                  # 'nPCs': 6, 
-                  # 'ntbuff': 64, 
-                  # 'nfilt_factor': 4, 
-                  # 'do_correction': True, 
-                  # 'NT': None, 
-                  # 'AUCsplit': 0.7, 
-                  # 'wave_length': 61, 
-                  # 'keep_good_only': False, 
-                  # 'skip_kilosort_preprocessing': False, 
-                  # 'scaleproc': None, 
-                  # 'save_rez_to_mat': False, 
-                  # 'delete_tmp_files': ('matlab_files',), 
-                  # 'delete_recording_dat': False, 
-                  # 'n_jobs': 8, 
-                  # 'chunk_duration': '1s', 
-                  # 'progress_bar': True, 
-                  # 'mp_context': None, 
-                  # 'max_threads_per_process': 1
+                    'detect_threshold': 6,
+                    'projection_threshold': [9, 9],
+                    'preclust_threshold': 8,
+                    'car': True,
+                    'minFR': 0.2,
+                    'minfr_goodchannels': 0.2,
+                    'nblocks': 5,
+                    'sig': 20, 
+                    'freq_min': 300, 
+                    'sigmaMask': 30, 
+                    'lam': 10.0, 
+                    'nPCs': 3, 
+                    'ntbuff': 64, 
+                    'nfilt_factor': 4, 
+                    'do_correction': True, 
+                    'NT': None, 
+                    'AUCsplit': 0.7, 
+                    'wave_length': 61, 
+                    'keep_good_only': False, 
+                    'skip_kilosort_preprocessing': False, 
+                    'scaleproc': None, 
+                    'save_rez_to_mat': False, 
+                    'delete_tmp_files': True, 
+                    'delete_recording_dat': False, 
+                    'n_jobs': 4, 
+                    'chunk_duration': '1s', 
+                    'progress_bar': True, 
+                    'mp_context': None, 
+                    'max_threads_per_process': 1
                  },
                }
 
@@ -358,6 +365,6 @@ for session in concatenated_signals:
                             session_name,
                             plot_sorter=True,
                             plot_comp=True,
-                            export_to_phy = False,
+                            export_to_phy = True,
                             sorting_summary = False)
     
