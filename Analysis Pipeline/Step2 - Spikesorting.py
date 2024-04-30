@@ -40,12 +40,12 @@ concatenated_files_folder = 'D:/Seafile/Data/ePhy/concatenated_signals'
 
 param_sorter = {
     'kilosort3':{
-                    'detect_threshold': 6,
+                    'detect_threshold': 3,
                     'projection_threshold': [9, 9],
                     'preclust_threshold': 8,
-                    'car': True,
-                    'minFR': 0.2,
-                    'minfr_goodchannels': 0.2,
+                    'car': False,
+                    'minFR': 0.1,
+                    'minfr_goodchannels': 0.1,
                     'nblocks': 5,
                     'sig': 20, 
                     'freq_min': 300, 
@@ -71,7 +71,6 @@ param_sorter = {
                     'max_threads_per_process': 1
                  },
                }
-
 
 #%% modules
 import spikeinterface as si
@@ -173,12 +172,29 @@ def spike_sorting(record,param_sorter,spikesorting_results_folder,saving_name,
                 we = si.extract_waveforms(record, sorter_result, folder=f'{output_folder}\we')
         
             print('Computing correlograms...')
-            spost.compute_correlograms(we,load_if_exists=True)
-            print('Computing spike_amplitudes...')
-            spost.compute_spike_amplitudes(we,load_if_exists=True)
+            try:
+                spost.compute_correlograms(we,load_if_exists=True)
+            except:
+                print('Computing correlograms Failed')
+                
             print('Computing template_similarity...')
-            spost.compute_unit_locations(we,load_if_exists=True)
-            spost.compute_template_similarity(we,load_if_exists=True) 
+            try:
+                spost.compute_spike_amplitudes(we,load_if_exists=True)
+            except:
+                print('Computing template_similarity Failed')
+            
+            print('Computing unit_locations...')
+            try:
+                spost.compute_unit_locations(we,load_if_exists=True)
+            except:
+                print('Computing unit_locations Failed')
+            
+            print('Computing template_similarity...')
+            try:
+                spost.compute_template_similarity(we,load_if_exists=True) 
+            except:
+                print('Computing template_similarity Failed')
+                       
         
             if plot_sorter:
                 folder_path = fr"{spikesorting_results_folder}\{saving_name}\{sorter_name}\we"
@@ -364,7 +380,7 @@ for session in concatenated_signals:
                             spikesorting_results_folder,
                             session_name,
                             plot_sorter=True,
-                            plot_comp=True,
+                            plot_comp=False,
                             export_to_phy = True,
                             sorting_summary = False)
     
