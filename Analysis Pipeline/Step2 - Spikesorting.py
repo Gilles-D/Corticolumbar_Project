@@ -22,54 +22,98 @@ Outputs = sorting results (spikeinterface)
 #Folder containing the folders of the session
 
 concatenated_signals = [
-"D:/Seafile/Data/ePhy/concatenated_signals/0030_01_09",
-"D:/Seafile/Data/ePhy/concatenated_signals/0030_01_11",
-"D:/Seafile/Data/ePhy/concatenated_signals/0031_01_10",
-"D:/Seafile/Data/ePhy/concatenated_signals/0031_15_02",
-"D:/Seafile/Data/ePhy/concatenated_signals/0032_01_10",
-"D:/Seafile/Data/ePhy/concatenated_signals/0033_16_02",
-"D:/Seafile/Data/ePhy/concatenated_signals/0033_22_01",
-"D:/Seafile/Data/ePhy/concatenated_signals/0034_16_02",
-"D:/Seafile/Data/ePhy/concatenated_signals/0034_24_01",
-"D:/Seafile/Data/ePhy/concatenated_signals/0035_26_01"
+"G:/Cohorte_2024/concatenated_signals/0030_01_09",
+"G:/Cohorte_2024/concatenated_signals/0030_01_11",
+"G:/Cohorte_2024/concatenated_signals/0031_01_10",
+"G:/Cohorte_2024/concatenated_signals/0031_15_02",
+"G:/Cohorte_2024/concatenated_signals/0032_01_10",
+"G:/Cohorte_2024/concatenated_signals/0033_16_02",
+"G:/Cohorte_2024/concatenated_signals/0033_22_01",
+"G:/Cohorte_2024/concatenated_signals/0034_16_02",
+"G:/Cohorte_2024/concatenated_signals/0034_24_01",
+"G:/Cohorte_2024/concatenated_signals/0035_26_01",
+"G:/Cohorte_2024/concatenated_signals/0040_11_04",
+"G:/Cohorte_2024/concatenated_signals/0040_26_03",
+"G:/Cohorte_2024/concatenated_signals/0040_27_03",
+"G:/Cohorte_2024/concatenated_signals/0042_27_03"
     ]
 
 
-spikesorting_results_folder='D:/Seafile/Data/ePhy/spikesorting_results'
-concatenated_files_folder = 'D:/Seafile/Data/ePhy/concatenated_signals'
+spikesorting_results_folder='G:\Cohorte_2024/spikesorting_results'
+concatenated_files_folder = 'G:\Cohorte_2024/concatenated_signals'
 
 param_sorter = {
-    'kilosort3':{
-                    'detect_threshold': 3,
-                    'projection_threshold': [9, 9],
-                    'preclust_threshold': 8,
-                    'car': False,
-                    'minFR': 0.1,
-                    'minfr_goodchannels': 0.1,
-                    'nblocks': 5,
-                    'sig': 20, 
-                    'freq_min': 300, 
-                    'sigmaMask': 30, 
-                    'lam': 10.0, 
-                    'nPCs': 3, 
-                    'ntbuff': 64, 
-                    'nfilt_factor': 4, 
-                    'do_correction': True, 
-                    'NT': None, 
-                    'AUCsplit': 0.7, 
-                    'wave_length': 61, 
-                    'keep_good_only': False, 
-                    'skip_kilosort_preprocessing': False, 
-                    'scaleproc': None, 
-                    'save_rez_to_mat': False, 
-                    'delete_tmp_files': True, 
-                    'delete_recording_dat': False, 
-                    'n_jobs': 4, 
-                    'chunk_duration': '1s', 
-                    'progress_bar': True, 
-                    'mp_context': None, 
-                    'max_threads_per_process': 1
-                 },
+    # 'kilosort3':{
+    #                 'detect_threshold': 3,
+    #                 'projection_threshold': [9, 9],
+    #                 'preclust_threshold': 8,
+    #                 'car': False,
+    #                 'minFR': 0.1,
+    #                 'minfr_goodchannels': 0.1,
+    #                 'nblocks': 5,
+    #                 'sig': 20, 
+    #                 'freq_min': 300, 
+    #                 'sigmaMask': 30, 
+    #                 'lam': 10.0, 
+    #                 'nPCs': 3, 
+    #                 'ntbuff': 64, 
+    #                 'nfilt_factor': 4, 
+    #                 'do_correction': True, 
+    #                 'NT': None, 
+    #                 'AUCsplit': 0.7, 
+    #                 'wave_length': 61, 
+    #                 'keep_good_only': False, 
+    #                 'skip_kilosort_preprocessing': False, 
+    #                 'scaleproc': None, 
+    #                 'save_rez_to_mat': False, 
+    #                 'delete_tmp_files': True, 
+    #                 'delete_recording_dat': False, 
+    #                 'n_jobs': 4, 
+    #                 'chunk_duration': '1s', 
+    #                 'progress_bar': True, 
+    #                 'mp_context': None, 
+    #                 'max_threads_per_process': 1
+    #              },
+    'kilosort4':{
+     'batch_size': 60000,
+     'nblocks': 0,
+     'Th_universal': 9,
+     'Th_learned': 8,
+     'do_CAR': True,
+     'invert_sign': False,
+     'nt': 61,
+     'shift': None,
+     'scale': None,
+     'artifact_threshold': None,
+     'nskip': 35,
+     'whitening_range': 32,
+     'binning_depth': 5,
+     'sig_interp': 20,
+     'drift_smoothing': [0.5, 0.5, 0.5],
+     'nt0min': None,
+     'dmin': None,
+     'dminx': 32,
+     'min_template_size': 10,
+     'template_sizes': 5,
+     'nearest_chans': 10,
+     'nearest_templates': 100,
+     'max_channel_distance': None,
+     'templates_from_data': True,
+     'n_templates': 6,
+     'n_pcs': 6,
+     'Th_single_ch': 6,
+     'acg_threshold': 0.2,
+     'ccg_threshold': 0.25,
+     'cluster_downsampling': 20,
+     'cluster_pcs': 64,
+     'x_centers': None,
+     'duplicate_spike_bins': 7,
+     'do_correction': True,
+     'keep_good_only': True,
+     'save_extra_kwargs': False,
+     'skip_kilosort_preprocessing': False,
+     'scaleproc': None,
+     'torch_device': 'auto'}
                }
 
 #%% modules
@@ -284,6 +328,12 @@ def spike_sorting(record,param_sorter,spikesorting_results_folder,saving_name,
         """
         Do not use yet
         As 16/04/24 : AttributeError: module 'referencing' has no attribute 'jsonschema'
+        
+        As 08/07/2024 : Fixed ?
+        
+        import kachery_cloud as kcl
+        kcl.init()
+        
         """
         
         print('Sorting_summary using sortingview')       
@@ -361,11 +411,11 @@ def plot_maker(sorter, we, save, sorter_name, save_path,saving_name):
 
 
 #%% OPTIONAL : Get sorter parameters
-#Display default parameters and their description for a sorter
-# params = ss.get_default_sorter_params(sorter_name_or_class='kilosort2')
+# Display default parameters and their description for a sorter
+# params = ss.get_default_sorter_params(sorter_name_or_class='kilosort4')
 # print("Parameters:\n", params)
 
-# desc = ss.get_sorter_params_description(sorter_name_or_class='kilosort2')
+# desc = ss.get_sorter_params_description(sorter_name_or_class='kilosort4')
 # print("Descriptions:\n", desc)
 
 
@@ -381,6 +431,6 @@ for session in concatenated_signals:
                             session_name,
                             plot_sorter=True,
                             plot_comp=False,
-                            export_to_phy = True,
+                            export_to_phy = False,
                             sorting_summary = False)
     
