@@ -76,8 +76,8 @@ param_sorter = {
     #              },
     'kilosort4':{
      'batch_size': 60000,
-     'nblocks': 0,
-     'Th_universal': 9,
+     'nblocks': 1,
+     'Th_universal': 10,
      'Th_learned': 8,
      'do_CAR': True,
      'invert_sign': False,
@@ -197,6 +197,7 @@ def spike_sorting(record,param_sorter,spikesorting_results_folder,saving_name,
             try:
                 print('Runing sorter')
                 sorter_result = ss.run_sorter(sorter_name,recording=record,output_folder=output_folder,docker_image=True,verbose=True,**sorter_param)
+                print(sorter_result)
                 # sorter_result.save(output_folder)
                 sorter_list.append(sorter_result)
                 sorter_name_list.append(sorter_name)
@@ -412,11 +413,16 @@ def plot_maker(sorter, we, save, sorter_name, save_path,saving_name):
 
 #%% OPTIONAL : Get sorter parameters
 # Display default parameters and their description for a sorter
+# import pprint
+
 # params = ss.get_default_sorter_params(sorter_name_or_class='kilosort4')
 # print("Parameters:\n", params)
+# pprint.pp(params)
+
 
 # desc = ss.get_sorter_params_description(sorter_name_or_class='kilosort4')
 # print("Descriptions:\n", desc)
+# pprint.pp(desc)
 
 
 #%% Main function
