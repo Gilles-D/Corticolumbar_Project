@@ -20,8 +20,8 @@ import os
 ############ Parameters to edit ############
 """
 
-pipeline_path = r"F:\Corticolumbar_Project\Analysis Pipeline"
-session_folder_path = r'D:\Seafile\Ma bibliothèque\Data\ePhy\Intan_Data\0040'
+pipeline_path = r"C:\Users\Gil\Documents\GitHub\Corticolumbar_Project\Analysis Pipeline"
+session_folder_path = r'G:\Cohorte_2024\intan_data\0042'
 
 #%%Functions
 

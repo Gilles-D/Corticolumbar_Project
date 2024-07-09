@@ -20,22 +20,22 @@ Outputs = binary format (spikeinterface readable)
 
 
 #Folder containing the folders of the session
-animal_id = "0040"
-session_name = "0040_27_03"
+animal_id = "0042"
+session_name = "0042_27_03"
 saving_name=session_name
 
-rhd_folder = rf'D:\Seafile\Ma bibliothèque\Data\ePhy\Intan_Data\{animal_id}\{session_name}'
+rhd_folder = rf'G:\Cohorte_2024\intan_data\{animal_id}\{session_name}'
 
 
 #####################################################################
 #Verify the following parameters and paths
 
-probe_path=r'D:/Seafile/Ma bibliothèque/Data/ePhy/probe/A1x16-Poly2-5mm-50s-177.json'   #INTAN Optrode
+probe_path=r'G:/Cohorte_2024/intan_data/A1x16-Poly2-5mm-50s-177.json'   #INTAN Optrode
 # probe_path = 'D:/ePhy/SI_Data/Buzsaki16.json'              #INTAN Buzsaki16
 
 
 # Saving Folder path
-saving_dir=r"D:\Seafile\Ma bibliothèque\Data\ePhy/concatenated_signals"
+saving_dir=r"G:/Cohorte_2024/concatenated_signals"
 
 # Filtering frequencies
 freq_min = 300      #High pass filter
