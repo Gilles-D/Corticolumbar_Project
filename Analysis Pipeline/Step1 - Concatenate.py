@@ -10,6 +10,9 @@ Saves concatenated signal for spikeinterface analysis in binary format (spikesor
 Inputs = intan files (.rhd format)
 Outputs = binary format (spikeinterface readable)
 
+
+UPDATE 19/11/2024 : Give a list of session folder to loop on each and concatenate
+
 """
 
 #%%Parameters
@@ -18,24 +21,24 @@ Outputs = binary format (spikeinterface readable)
 ###################### TO CHANGE ####################################
 #####################################################################
 
+#Folder containing the folders of the sessions
+signal_sessions = [
+"G:/Cohorte_2024/1_intan_data/8513/8513_05_11",
+"G:/Cohorte_2024/1_intan_data/8513/8513_14_11",
+"G:/Cohorte_2024/1_intan_data/8513/8513_31_10"
+    ]
 
-#Folder containing the folders of the session
-animal_id = "0042"
-session_name = "0042_27_03"
-saving_name=session_name
-
-rhd_folder = rf'G:\Cohorte_2024\intan_data\{animal_id}\{session_name}'
 
 
 #####################################################################
 #Verify the following parameters and paths
 
-probe_path=r'G:/Cohorte_2024/intan_data/A1x16-Poly2-5mm-50s-177.json'   #INTAN Optrode
+probe_path=r'G:/Cohorte_2024/1_intan_data/A1x16-Poly2-5mm-50s-177.json'   #INTAN Optrode
 # probe_path = 'D:/ePhy/SI_Data/Buzsaki16.json'              #INTAN Buzsaki16
 
 
 # Saving Folder path
-saving_dir=r"G:/Cohorte_2024/concatenated_signals"
+saving_dir=r"G:/Cohorte_2024/2_concatenated_signals"
 
 # Filtering frequencies
 freq_min = 300      #High pass filter
@@ -336,10 +339,14 @@ def plot_maker(sorter, we, save, sorter_name, save_path,saving_name):
 
 
 #%%Main script
-recordings = list_recording_files(rhd_folder)
-
+for session in signal_sessions:
+    recordings = list_recording_files(session)   
+    animal_id = session.split('/')[-2]
+    session_name = session.split('/')[-1]
+    saving_name=session_name
     
-recording = concatenate_preprocessing(recordings,saving_dir,saving_name,
+    
+    recording = concatenate_preprocessing(recordings,saving_dir,saving_name,
                                       probe_path,excluded_sites,Plotting=True,
                                       freq_min=freq_min, freq_max=freq_max,
                                       MOCAP_200Hz_notch=MOCAP_200Hz_notch,
