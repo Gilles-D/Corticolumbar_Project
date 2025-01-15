@@ -22,25 +22,24 @@ Outputs = sorting results (spikeinterface)
 #Folder containing the folders of the session
 
 concatenated_signals = [
-"G:/Cohorte_2024/concatenated_signals/0030_01_09",
-"G:/Cohorte_2024/concatenated_signals/0030_01_11",
-"G:/Cohorte_2024/concatenated_signals/0031_01_10",
-"G:/Cohorte_2024/concatenated_signals/0031_15_02",
-"G:/Cohorte_2024/concatenated_signals/0032_01_10",
-"G:/Cohorte_2024/concatenated_signals/0033_16_02",
-"G:/Cohorte_2024/concatenated_signals/0033_22_01",
-"G:/Cohorte_2024/concatenated_signals/0034_16_02",
-"G:/Cohorte_2024/concatenated_signals/0034_24_01",
-"G:/Cohorte_2024/concatenated_signals/0035_26_01",
-"G:/Cohorte_2024/concatenated_signals/0040_11_04",
-"G:/Cohorte_2024/concatenated_signals/0040_26_03",
-"G:/Cohorte_2024/concatenated_signals/0040_27_03",
-"G:/Cohorte_2024/concatenated_signals/0042_27_03"
+"G:/Cohorte_2024/2_concatenated_signals/8513_31_10",
+"G:/Cohorte_2024/2_concatenated_signals/0032_01_10",
+"G:/Cohorte_2024/2_concatenated_signals/0033_16_02",
+"G:/Cohorte_2024/2_concatenated_signals/0033_22_01",
+"G:/Cohorte_2024/2_concatenated_signals/0034_16_02",
+"G:/Cohorte_2024/2_concatenated_signals/0034_24_01",
+"G:/Cohorte_2024/2_concatenated_signals/0035_26_01",
+"G:/Cohorte_2024/2_concatenated_signals/0040_11_04",
+"G:/Cohorte_2024/2_concatenated_signals/0040_26_03",
+"G:/Cohorte_2024/2_concatenated_signals/0040_27_03",
+"G:/Cohorte_2024/2_concatenated_signals/0042_27_03",
+"G:/Cohorte_2024/2_concatenated_signals/8513_05_11",
+"G:/Cohorte_2024/2_concatenated_signals/8513_14_11"
     ]
 
 
-spikesorting_results_folder='G:\Cohorte_2024/spikesorting_results'
-concatenated_files_folder = 'G:\Cohorte_2024/concatenated_signals'
+spikesorting_results_folder=r'G:\Cohorte_2024/3_spikesorting_results'
+concatenated_files_folder =r'G:\Cohorte_2024\2_concatenated_signals'
 
 param_sorter = {
     # 'kilosort3':{
@@ -73,47 +72,95 @@ param_sorter = {
     #                 'progress_bar': True, 
     #                 'mp_context': None, 
     #                 'max_threads_per_process': 1
-    #              },
-    'kilosort4':{
-     'batch_size': 60000,
-     'nblocks': 1,
-     'Th_universal': 10,
-     'Th_learned': 8,
-     'do_CAR': True,
-     'invert_sign': False,
-     'nt': 61,
-     'shift': None,
-     'scale': None,
-     'artifact_threshold': None,
-     'nskip': 35,
-     'whitening_range': 32,
-     'binning_depth': 5,
-     'sig_interp': 20,
-     'drift_smoothing': [0.5, 0.5, 0.5],
-     'nt0min': None,
-     'dmin': None,
-     'dminx': 32,
-     'min_template_size': 10,
-     'template_sizes': 5,
-     'nearest_chans': 10,
-     'nearest_templates': 100,
-     'max_channel_distance': None,
-     'templates_from_data': True,
-     'n_templates': 6,
-     'n_pcs': 6,
-     'Th_single_ch': 6,
-     'acg_threshold': 0.2,
-     'ccg_threshold': 0.25,
-     'cluster_downsampling': 20,
-     'cluster_pcs': 64,
-     'x_centers': None,
-     'duplicate_spike_bins': 7,
-     'do_correction': True,
-     'keep_good_only': True,
-     'save_extra_kwargs': False,
-     'skip_kilosort_preprocessing': False,
-     'scaleproc': None,
-     'torch_device': 'auto'}
+    #               },
+    # 'kilosort4':{
+     # 'batch_size': 60000,
+     # 'nblocks': 1,
+     # 'Th_universal': 10,
+     # 'Th_learned': 8,
+     # 'do_CAR': True,
+     # 'invert_sign': False,
+     # 'nt': 61,
+     # 'shift': None,
+     # 'scale': None,
+     # 'artifact_threshold': None,
+     # 'nskip': 35,
+     # 'whitening_range': 32,
+     # 'binning_depth': 5,
+     # 'sig_interp': 20,
+     # 'drift_smoothing': [0.5, 0.5, 0.5],
+     # 'nt0min': None,
+     # 'dmin': None,
+     # 'dminx': 32,
+     # 'min_template_size': 10,
+     # 'template_sizes': 5,
+     # 'nearest_chans': 10,
+     # 'nearest_templates': 100,
+     # 'max_channel_distance': None,
+     # 'templates_from_data': True,
+     # 'n_templates': 6,
+     # 'n_pcs': 6,
+     # 'Th_single_ch': 6,
+     # 'acg_threshold': 0.2,
+     # 'ccg_threshold': 0.25,
+     # 'cluster_downsampling': 20,
+     # 'cluster_pcs': 64,
+     # 'x_centers': None,
+     # 'duplicate_spike_bins': 7,
+     # 'do_correction': True,
+     # 'keep_good_only': True,
+     # 'save_extra_kwargs': False,
+     # 'skip_kilosort_preprocessing': False,
+     # 'scaleproc': None,
+     # 'torch_device': 'auto'
+     # },
+    'mountainsort5':{
+     'scheme': '2',
+     'detect_threshold': 5.5,
+     'detect_sign': -1,
+     'detect_time_radius_msec': 0.5,
+     'snippet_T1': 20,
+     'snippet_T2': 20,
+     'npca_per_channel': 3,
+     'npca_per_subdivision': 10,
+     'snippet_mask_radius': 250,
+     'scheme1_detect_channel_radius': 150,
+     'scheme2_phase1_detect_channel_radius': 200,
+     'scheme2_detect_channel_radius': 50,
+     'scheme2_max_num_snippets_per_training_batch': 200,
+     'scheme2_training_duration_sec': 300,
+     'scheme2_training_recording_sampling_mode': 'uniform',
+     'scheme3_block_duration_sec': 1800,
+     'freq_min': 300,
+     'freq_max': 6000,
+     'filter': True,
+     'whiten': True},
+    
+    # 'tridesclous':{
+    #  'freq_min': 400.0,
+    #  'freq_max': 5000.0,
+    #  'detect_sign': -1,
+    #  'detect_threshold': 5,
+    #  'common_ref_removal': False,
+    #  'nested_params': None,
+    #  'n_jobs': 1,
+    #  'chunk_duration': '1s',
+    #  'progress_bar': True,
+    #  'mp_context': None,
+    #  'max_threads_per_process': 1},
+    
+    # 'spykingcircus':{
+    #  'detect_sign': -1,
+    #  'adjacency_radius': 100,
+    #  'detect_threshold': 6,
+    #  'template_width_ms': 3,
+    #  'filter': True,
+    #  'merge_spikes': True,
+    #  'auto_merge': 0.75,
+    #  'num_workers': None,
+    #  'whitening_max_elts': 1000,
+    #  'clustering_max_elts': 10000}
+    
                }
 
 #%% modules
@@ -182,13 +229,14 @@ def spike_sorting(record,param_sorter,spikesorting_results_folder,saving_name,
         print(sorter_name)
         
         output_folder = rf'{spikesorting_results_folder}\{saving_name}\{sorter_name}'
-        print(output_folder)
+        print(rf'Output folder : {output_folder}')
         if os.path.isdir(output_folder):
             print('Sorter folder found, load from folder')
             try:
                 sorter_result = se.NpzSortingExtractor.load_from_folder(rf'{output_folder}/in_container_sorting')
                 sorter_list.append(sorter_result)
                 sorter_name_list.append(sorter_name)
+                print('--> Sorter folder succesfully loaded')
             except ValueError as e:
                 print(f"**** Can't load the sorter results, {e}")
                 sorter_result = 0
@@ -201,6 +249,7 @@ def spike_sorting(record,param_sorter,spikesorting_results_folder,saving_name,
                 # sorter_result.save(output_folder)
                 sorter_list.append(sorter_result)
                 sorter_name_list.append(sorter_name)
+                print('--> Finishing sorting')
             except Exception as e:
                 print(f"**** Something went wrong: {e}")
                 sorter_result = 0
@@ -212,9 +261,15 @@ def spike_sorting(record,param_sorter,spikesorting_results_folder,saving_name,
                 pickle.dump(sorter_param, f)
             if os.path.isdir(f'{output_folder}\we'):
                 print('Waveform folder found, load from folder')
-                we = si.WaveformExtractor.load_from_folder(f'{output_folder}\we', sorting=sorter_result)
+                we = si.WaveformExtractor.load_from_folder(rf'{output_folder}\we', sorting=sorter_result)
+                print('--> Waveform folder succesfully loaded')
             else:
+                print('Extracting waveforms')
                 we = si.extract_waveforms(record, sorter_result, folder=f'{output_folder}\we')
+        
+        
+        
+        
         
             print('Computing correlograms...')
             try:
@@ -265,7 +320,7 @@ def spike_sorting(record,param_sorter,spikesorting_results_folder,saving_name,
                     sexp.export_to_phy(we, output_folder=save_folder_phy)
             print("Spike sorting done")
         except:
-            print("**** Failed to save sorter")
+            print("**** Something went wrong")
             we = 0
             
     
@@ -332,11 +387,11 @@ def spike_sorting(record,param_sorter,spikesorting_results_folder,saving_name,
         
         As 08/07/2024 : Fixed ?
         
-        import kachery_cloud as kcl
-        kcl.init()
+        
         
         """
-        
+        import kachery_cloud as kcl
+        kcl.init()
         print('Sorting_summary using sortingview')       
         sw.plot_sorting_summary(waveform_extractor=we, backend="sortingview")
 
@@ -415,7 +470,7 @@ def plot_maker(sorter, we, save, sorter_name, save_path,saving_name):
 # Display default parameters and their description for a sorter
 # import pprint
 
-# params = ss.get_default_sorter_params(sorter_name_or_class='kilosort4')
+# params = ss.get_default_sorter_params(sorter_name_or_class='spykingcircus')
 # print("Parameters:\n", params)
 # pprint.pp(params)
 
@@ -435,8 +490,9 @@ for session in concatenated_signals:
                             param_sorter,
                             spikesorting_results_folder,
                             session_name,
+                            nb_of_agreement=0,
                             plot_sorter=True,
                             plot_comp=False,
-                            export_to_phy = False,
+                            export_to_phy = True,
                             sorting_summary = False)
     

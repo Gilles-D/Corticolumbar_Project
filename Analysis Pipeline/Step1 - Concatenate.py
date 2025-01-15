@@ -23,9 +23,7 @@ UPDATE 19/11/2024 : Give a list of session folder to loop on each and concatenat
 
 #Folder containing the folders of the sessions
 signal_sessions = [
-"G:/Cohorte_2024/1_intan_data/8513/8513_05_11",
-"G:/Cohorte_2024/1_intan_data/8513/8513_14_11",
-"G:/Cohorte_2024/1_intan_data/8513/8513_31_10"
+'G:/Cohorte_2024/1_intan_data/0030/0030_01_11'
     ]
 
 

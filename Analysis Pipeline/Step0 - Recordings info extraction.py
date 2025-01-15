@@ -13,7 +13,10 @@ Parameters to edit :
     - session_folder_path : animal folder containing intan recordings session
 
 
+Update 19/11 :seems to be working well with spikeinterface version 0.100.8
+
 """
+
 import os
 
 """
@@ -21,7 +24,7 @@ import os
 """
 
 pipeline_path = r"C:\Users\Gil\Documents\GitHub\Corticolumbar_Project\Analysis Pipeline"
-session_folder_path = r'G:\Cohorte_2024\intan_data\0042'
+session_folder_path = r'I:/8513'
 
 #%%Functions
 
@@ -384,3 +387,4 @@ for folder in recording_folders:
     print(folder)
     file_list = list_recording_files(folder)
     Get_TTL_idx(file_list)
+    

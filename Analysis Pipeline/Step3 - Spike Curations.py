@@ -17,13 +17,13 @@ Returns: a curated sorter result (spikeinterface) and computed metrics, and wave
 """
 
 #%% Parameters
-session_name = '0040_11_04'
+session_name = '0030_01_09'
 sorter_name='kilosort3'
 # sorter_name='mountainsort4'
 
 
-concatenated_signals_path = r'D:\Seafile\Ma bibliothèque\Data\ePhy\concatenated_signals'
-spikesorting_results_folder = r'D:\Seafile\Ma bibliothèque\Data\ePhy\spikesorting_results'
+concatenated_signals_path = r'G:/Cohorte_2024/2_concatenated_signals'
+spikesorting_results_folder = r'G:/Cohorte_2024/3_spikesorting_results'
 sorter_folder = rf'{spikesorting_results_folder}/{session_name}/{sorter_name}'
 signal_folder = rf'{concatenated_signals_path}/{session_name}'
 
@@ -210,7 +210,7 @@ def fractionner_liste(liste, taille_sous_liste):
 Loading
 """
 sorter_result = se.NpzSortingExtractor.load_from_folder(rf'{sorter_folder}/in_container_sorting')
-we = si.WaveformExtractor.load_from_folder(f'{sorter_folder}\we')
+we = si.WaveformExtractor.load_from_folder(f'{sorter_folder}\we',with_recording=True)
 similarity = np.load(rf"{sorter_folder}\we\similarity\similarity.npy")
 
 #read signal (concatenated)
