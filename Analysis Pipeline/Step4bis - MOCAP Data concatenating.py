@@ -91,8 +91,8 @@ def list_recording_files(path, session):
 
 
 #%%Parameters
-session_name = '0026_08_08'
-mocap_session = "03"
+session_name = '0022_01_08'
+mocap_session = "01"
 
 spikesorting_results_path = r"\\equipe2-nas1\Public\DATA\Gilles\Spikesorting_August_2023\SI_Data\spikesorting_results"
 concatenated_signals_path = r'\\equipe2-nas1\Public\DATA\Gilles\Spikesorting_August_2023\SI_Data\concatenated_signals'
@@ -116,47 +116,64 @@ trageted_instantaneous_rate_bin_size = 0.005 #s
 recordings_info = Get_recordings_info(session_name,concatenated_signals_path,spikesorting_results_path)
 
 """
-Load Mocap data
+Load mocap infos and TTL
 """
-animal = session_name.split('_')[0]
+#Get animal number
+animal = session_name.split('_')[0]        
 print(rf"Loading MOCAP data for Mocap session {animal}_{mocap_session}")
+
+
+#Get mocap_files from analysis folder (formated from previous step)
 mocap_files = list_recording_files(rf"{mocap_data_folder}/{animal}/Analysis",mocap_session)
 # print(rf"{len(mocap_files)} trials found")
 
+
+#Get Mocap TTL indexes (slices one on two because 1 TTL appears twice with start and end of the ttl) and transform them in times
 mocap_ttl = recordings_info['mocap_ttl_on'][::2]
+mocap_ttl_times = mocap_ttl/sampling_rate
 # print(rf"{len(mocap_ttl)} TTL found in recordings info")
 
+
+#Compare the number of ttl with the number of files
 if len(mocap_ttl) > len(mocap_files):
     print(rf"Be careful ! there are more TTL ({len(mocap_ttl)}) than mocap files ({len(mocap_files)})")
 elif len(mocap_ttl) < len(mocap_files):
     print(rf"Be careful ! there are less TTL ({len(mocap_ttl)}) than mocap files ({len(mocap_files)})")
     
-mocap_ttl_times = mocap_ttl/sampling_rate
+    
+"""
+Load Mocap data
+"""
 
-
+#Create a list that will regroup all the mocap data from each trial
 whole_data_mocap = []
+
+#Loop on all the ttl times
 for i,ttl_time in enumerate(mocap_ttl_times):
     mocap_file = None
-    trial = i+1
+    trial = i+1         #i+1 because enumerates starts at 0 and trials at 1
     
     print(rf"Trial {trial}")
-        
+    
+    #Loop on all mocap files    
     for file_path in mocap_files:
-        trial_file = int(file_path.split("_")[-1].split('.')[0])
-        if trial_file == trial:
+        trial_file = int(file_path.split("_")[-1].split('.')[0])    #Get the trial number of the FILE
+        if trial_file == trial:                                     #and take it equals the current trial number of ttl
             mocap_file = file_path
          
-    
+    #If there is a mocap file for this trial, append it to the list whole_data_mocap
     if mocap_file is not None:
         mocap_data = pd.read_excel(mocap_file).iloc[:, 1:]
-                
+        
+        #Create a time axis for this trial that starts at the ttl time of the trial
+        #The mocap delay is removed here (time between the TTL is sent and the mocap starts)        
         trial_time_axis = (np.array(range(len(mocap_data)))/mocap_freq)+ttl_time-mocap_delay/mocap_freq
         
         mocap_data.insert(0,'time_axis',trial_time_axis)
         whole_data_mocap.append(mocap_data)
              
 
-        
+#Transform the list of dataframe in one big dataframe        
 df_mocap_data_all = pd.concat(whole_data_mocap, axis=0)
         
 savepath = rf"{sorter_folder}\curated\processing_data\Mocap_data.xlsx"
